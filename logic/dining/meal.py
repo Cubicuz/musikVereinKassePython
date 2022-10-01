@@ -1,29 +1,48 @@
-from event import Event
+from logic.event import Event
+from decimal import *
+
+#decimals need 2 significant places
+getcontext().prec = 2
 
 class Meal:
 
 
-    def __init__(self, id, name, price, halfPrice = 0, totalAmount = 0, totalHalfAmount = 0):
+    def __init__(self, id, name, price, totalAmount = 0):
         self._id = id
         self._name = name
-        self._price = price
-        self._halfPrice = halfPrice
+        self._price = Decimal(price)
         self._amount = 0
-        self._amountChanged = Event()
-        self._amountHalfPrice = 0
         self._totalAmount = totalAmount
-        self._totalHalfAmount = totalHalfAmount
+
+        #events
+        self._amountChanged = Event()
 
     def changeAmount(self, diffAmount):
-        pass
-
+        if diffAmount != 0:
+            self._amount += diffAmount
+            self._amountChanged(diffAmount)
     def get_amount(self):
         return self._amount
-    def set_amount(self, amount):
-        diff = amount - self._amount
-        self._amount = amount
-        self._amountChanged()
+    def set_amount(self, val):
+        if self._amount != val:
+            diff = val - self._amount
+            self._amount = val
+            self._amountChanged(diff)
     amount = property(get_amount, set_amount)
 
+    def get_totalAmount(self):
+        return self._totalAmount
+    totalAmount = property(get_totalAmount)
 
+    def get_name(self):
+        return self._name
+    name = property(get_name)
 
+    def get_price(self):
+        return self._price
+    price = property(get_price)
+
+    def payOrder(self):
+        if self._amount != 0:
+            self._totalAmount += self._amount
+            self.amount = 0
