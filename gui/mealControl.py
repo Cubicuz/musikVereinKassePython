@@ -36,24 +36,35 @@ def numberValidator(user_input):
         return False
 
 class MealControl:
-    def __init__(self, root, meal):
+    def __init__(self, root, meal, styleName):
         self._root = root
-        self._frame = ttk.Frame(root, padding=10)
+            
         self._meal = meal
         self._amount = tk.IntVar(value=0)
         def valueChanged():
             print(self._amount.get()) 
+
+        self._frame = ttk.Frame(
+            root, 
+            padding=10,
+            style=styleName+'.TFrame')
+
+        self._label = ttk.Label(
+            self._frame,
+            text=self._meal.name,
+            style=styleName+'.TLabel')
+        self._label.grid(column=0, row=0)
 
         self._spinbox = ttk.Spinbox(
             self._frame,
             from_=0, increment=1, to=100, 
             textvariable=self._amount, 
             command=valueChanged)
-        self._spinbox.grid(column=0, row=0)
-        self._frame.pack()
-        s = ttk.Style(self._frame)
-        s.configure('TFrame', background="red")
+        self._spinbox.grid(column=1, row=0)
 
+
+        self._frame.pack()
+        self._frame.config(style=styleName + '.TFrame')
         validator = self._frame.register(numberValidator)
         self._spinbox.config(validate="key", validatecommand=(validator, '%P'))
 
@@ -62,7 +73,12 @@ class MealControl:
 if __name__ == "__main__":
     root = tk.Tk()
 
-    m = MealControl(root, Meal(0, "name", 5.20))
+    s = ttk.Style()
+    styleName = 'Group1'
+    s.configure(styleName+'.TFrame', background="green")
+    s.configure(styleName+'.TLabel', background="red")
+
+    m = MealControl(root, Meal(0, "name", 5.20), styleName)
 
     root.mainloop()
 
