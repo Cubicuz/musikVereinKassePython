@@ -35,9 +35,18 @@ def numberValidator(user_input):
         print("Not numeric ", user_input)
         return False
 
+
 class MealControl:
+
+
     def __init__(self, root, meal, styleName):
         self._root = root
+        def clickHandler(event):
+            print(event.num)
+            if event.num == 1: # left click
+                print('increment')
+            if event.num == 3: # right click
+                print('decrement')
             
         self._meal = meal
         self._amount = tk.IntVar(value=0)
@@ -48,12 +57,14 @@ class MealControl:
             root, 
             padding=10,
             style=styleName+'.TFrame')
+        self._frame.bind("<Button>", clickHandler)
 
         self._label = ttk.Label(
             self._frame,
             text=self._meal.name,
             style=styleName+'.TLabel')
         self._label.grid(column=0, row=0)
+        self._label.bind("<Button>", clickHandler)
 
         self._spinbox = ttk.Spinbox(
             self._frame,
@@ -76,7 +87,7 @@ if __name__ == "__main__":
     s = ttk.Style()
     styleName = 'Group1'
     s.configure(styleName+'.TFrame', background="green")
-    s.configure(styleName+'.TLabel', background="red")
+    s.configure(styleName+'.TLabel', background="green")
 
     m = MealControl(root, Meal(0, "name", 5.20), styleName)
 
