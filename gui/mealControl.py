@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
-import sys
- 
 # setting path
-sys.path.append('../musikVereinKassePython')
+if __name__ == "__main__":
+    import sys
+    sys.path.append('../musikVereinKassePython')
 
 from logic.dining.meal import Meal
 
