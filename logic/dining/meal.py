@@ -15,19 +15,22 @@ class Meal:
         self._totalAmount = totalAmount
 
         #events
-        self._amountChanged = Event()
+        self.amountChanged = Event()
 
     def changeAmount(self, diffAmount):
+        if self._amount + diffAmount < 0:
+            diffAmount = -self._amount
         if diffAmount != 0:
             self._amount += diffAmount
-            self._amountChanged(diffAmount)
+            self.amountChanged(self._amount)
     def get_amount(self):
         return self._amount
     def set_amount(self, val):
+        if val < 0:
+            val = 0
         if self._amount != val:
-            diff = val - self._amount
             self._amount = val
-            self._amountChanged(diff)
+            self.amountChanged(self._amount)
     amount = property(get_amount, set_amount)
 
     def get_totalAmount(self):
