@@ -29,5 +29,6 @@ class MealGroup:
         meals = []
         for i in range(6):
             meals.append(Meal.generateMock(i))
-        MealGroup(meals, "something", colors[mockID%len(colors)])
+        mg = MealGroup(meals, "something"+str(mockID), colors[mockID%len(colors)])
         mockID += 1
+        return mg

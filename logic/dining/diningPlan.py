@@ -8,6 +8,9 @@ class DiningPlan:
         self._price = 0
         self.priceChanged = Event()
 
+    def get_mealGroups(self):
+        return self._mealGroups
+    mealGroups = property(get_mealGroups)
 
     def get_price(self):
         return self._price
