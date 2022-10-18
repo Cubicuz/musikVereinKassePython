@@ -49,3 +49,10 @@ class Meal:
         if self._amount != 0:
             self._totalAmount += self._amount
             self.amount = 0
+
+    def generateMock(mockID):
+        mockNames = ["Sauerkraut", "Brot", "Schupfnudeln", "Cola"]
+        prices = [1, 2, 3, 3.50, 4, 4.50, 5, 5.50]
+        m = Meal(mockID, mockNames[mockID%len(mockNames)], prices[mockID%len(prices)])
+        mockID += 1
+        return m

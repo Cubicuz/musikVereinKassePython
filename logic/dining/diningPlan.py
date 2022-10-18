@@ -1,9 +1,10 @@
-from event import Event
+from logic.event import Event
+from logic.dining.mealGroup import MealGroup
 
 class DiningPlan:
 
-    def __init__(self):
-        self._mealGroups = []
+    def __init__(self, mealGroups):
+        self._mealGroups = mealGroups
         self._price = 0
         self.priceChanged = Event()
 
@@ -27,3 +28,10 @@ class DiningPlan:
                 m.payOrder()
 
         #TODO store order
+
+    def generateMock():
+        mealGroups = []
+        for i in range(3):
+            mealGroups.append(MealGroup.generateMock(i))
+        return DiningPlan(mealGroups)
+

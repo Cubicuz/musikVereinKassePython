@@ -1,4 +1,4 @@
-from meal import Meal
+from logic.dining.meal import Meal
 
 
 class MealGroup:
@@ -23,3 +23,11 @@ class MealGroup:
     def get_meals(self):
         return self._meals
     meals = property(get_meals)
+
+    def generateMock(mockID):
+        colors = ["red", "green", "blue"]
+        meals = []
+        for i in range(6):
+            meals.append(Meal.generateMock(i))
+        MealGroup(meals, "something", colors[mockID%len(colors)])
+        mockID += 1
