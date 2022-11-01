@@ -68,12 +68,14 @@ class MealControl:
             padding=10,
             style=styleName+'.TFrame')
         self._frame.bind("<Button>", clickHandler)
+        self._frame.columnconfigure(0, weight=1)
 
         self._label = ttk.Label(
             self._frame,
             text=self._meal.name,
-            style=styleName+'.TLabel')
-        self._label.grid(column=0, row=0)
+            style=styleName+'.TLabel',
+            padding=[0, 0, 10, 0])
+        self._label.grid(column=0, row=0, sticky="w")
         self._label.bind("<Button>", clickHandler)
 
         self._spinbox = ttk.Spinbox(
@@ -84,11 +86,13 @@ class MealControl:
         self._meal.amountChanged += amountChangedHandler
 
 
-        self._frame.pack()
         self._frame.config(style=styleName + '.TFrame')
 
         validator = self._frame.register(numberValidator)
         self._spinbox.config(validate="key", validatecommand=(validator, '%P'))
+
+    def getFrame(self):
+        return self._frame
 
 
 
@@ -101,6 +105,7 @@ if __name__ == "__main__":
     s.configure(styleName+'.TLabel', background="green")
 
     m = MealControl(root, Meal(0, "name", 5.20), styleName)
+    m.getFrame().pack()
 
     root.mainloop()
 
